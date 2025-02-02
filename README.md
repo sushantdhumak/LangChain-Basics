@@ -8,5 +8,8 @@ This project provides a basic introduction to building a simple LLM application 
 
 This project helps to design and implement an LLM-powered chatbot. This chatbot will be able to have a conversation and remember previous interactions with a chat model.
 
+### 3. Build a Simple Chatbot with Prompt Templates - Simple_Chatbot_Prompt_Template.py
+
+This project helps to design and implement an LLM-powered chatbot. We will send the messages to chatbot using Prompt Templates.
 
 
