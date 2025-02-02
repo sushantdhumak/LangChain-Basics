@@ -1,5 +1,5 @@
 # ************************************************
-# Build a Simplae Chatbot with message persistence
+# Build a Simplae Chatbot with Prompts
 # ************************************************
 
 # Loading environment variables
@@ -18,44 +18,22 @@ model = ChatOpenAI(model="gpt-4o-mini")
 
 
 # -----------------------------------------------
-# Let's create a simple message using HumanMessage
+# Use of Prompt Template
+# MessagesPlaceholder to pass all the messages in a single prompt
 # -----------------------------------------------
 
-from langchain_core.messages import HumanMessage
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-response = model.invoke([HumanMessage(content="Hi! I am Sushant")])
-
-print(response.content)
-print(response.response_metadata)
-
-
-# -----------------------------------------------
-# Does model support chat history? No
-# -----------------------------------------------
-
-response = model.invoke([HumanMessage(content="What's my name?")])
-
-print(response.content)
-print(response.response_metadata)
-
-
-# -----------------------------------------------
-# Let's pass all message back to the model
-# -----------------------------------------------
-
-from langchain_core.messages import AIMessage, HumanMessage
-
-response = (model.invoke(
+prompt_template = ChatPromptTemplate.from_messages(
     [
-        HumanMessage(content="Hi! I'm Sushant"),
-        AIMessage(content="Hello Sushant! How can I assist you today?"),
-        HumanMessage(content="What's my name?"),
+        ( 
+          "system",
+          "You are a helpful assistant who sounds like a pirate. Answer all questions to the best of your ability."
+        ),
+
+        MessagesPlaceholder(variable_name="messages"),
     ]
-))
-
-print(response.content)
-print(response.response_metadata)
-
+)
 
 # -----------------------------------------------
 # Message Persistence using LangGraph
@@ -69,12 +47,13 @@ graph = StateGraph(state_schema=MessagesState)
 
 # Function to call a Model
 def call_model(state: MessagesState):
-    response = model.invoke(state["messages"])
+    prompt = prompt_template.invoke(state)
+    response = model.invoke(prompt)
     return {"messages": response}
 
 # Define a node to call the model
-graph.add_node("model", call_model)
 graph.add_edge(START, "model")
+graph.add_node("model", call_model)
 
 # Add Memory
 memory = MemorySaver()
@@ -86,14 +65,9 @@ app = graph.compile(checkpointer=memory)
 # To support multiple conversation threads
 # -----------------------------------------------
 
-config = {"configurable": {"thread_id": "abc123"}}
-
-
-# -----------------------------------------------
-# Let's start with chat using above thread
-# -----------------------------------------------
-
 from langchain_core.messages import HumanMessage
+
+config = {"configurable": {"thread_id": "abc123"}}
 
 query = "Hi! I'm Sushant"
 
@@ -110,13 +84,63 @@ output["messages"][-1].pretty_print()
 
 
 # -----------------------------------------------
-# Let's ask a question on different thread
+# Let's try with a different prompt
+# -----------------------------------------------
+
+prompt_template = ChatPromptTemplate.from_messages(
+    [
+        (
+          "system",
+          "You are a helpful assistant. Answer all questions to the best of your ability in {language}.",
+        ),
+
+        MessagesPlaceholder(variable_name="messages"),
+    ]
+)
+
+
+# -----------------------------------------------
+# Message Persistence using LangGraph
+# -----------------------------------------------
+
+from typing import Sequence
+
+from langchain_core.messages import BaseMessage
+from langgraph.graph.message import add_messages
+from typing_extensions import Annotated, TypedDict
+
+class state(TypedDict):
+    messages: Annotated[Sequence[BaseMessage], add_messages]
+    language: str
+
+
+# Define a graph
+graph = StateGraph(state_schema=state)
+
+# Function to call a Model
+def call_model(state: state):
+    prompt = prompt_template.invoke(state)
+    response = model.invoke(prompt)
+    return {"messages": [response]}
+
+# Define a node to call the model
+graph.add_edge(START, "model")
+graph.add_node("model", call_model)
+
+# Add Memory
+memory = MemorySaver()
+app = graph.compile(checkpointer=memory)
+
+
 # -----------------------------------------------
 
 config = {"configurable": {"thread_id": "abc456"}}
 
+query = "Hi! I'm Sushant"
+language = "Spanish"
+
 input_message = [HumanMessage(content=query)]
-output = app.invoke({"messages": input_message}, config=config)
+output = app.invoke({"messages": input_message, "language": language}, config=config)
 output["messages"][-1].pretty_print()
 
 
@@ -124,7 +148,7 @@ output["messages"][-1].pretty_print()
 # Let's go back to our original thread
 # -----------------------------------------------
 
-config = {"configurable": {"thread_id": "abc123"}}
+query = "What's my name?"
 
 input_message = [HumanMessage(content=query)]
 output = app.invoke({"messages": input_message}, config=config)
