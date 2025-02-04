@@ -12,4 +12,6 @@ This project helps to design and implement an LLM-powered chatbot. This chatbot 
 
 This project helps to design and implement an LLM-powered chatbot. We will send the messages to chatbot using Prompt Templates.
 
+### 4. Build a Simplae Chatbot with Chat History and Stream - Simple_Chatbot_ChatHistory_Streaming.py
 
+This project helps to design and implement an LLM-powered chatbot. We will manage conversation history and also use streaming to improve the user experience.
