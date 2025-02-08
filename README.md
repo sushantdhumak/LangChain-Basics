@@ -15,3 +15,7 @@ This project helps to design and implement an LLM-powered chatbot. We will send 
 ### 4. Build a Simplae Chatbot with Chat History and Stream - Simple_Chatbot_ChatHistory_Streaming.py
 
 This project helps to design and implement an LLM-powered chatbot. We will manage conversation history and also use streaming to improve the user experience.
+
+### 5. Build an Agent - Build_Agent.py
+
+Let's build an Agent. We will build an agent that can interact with a search engine, we wiil able to ask this agent questions, watch it call the search tool, and have conversations with it.
