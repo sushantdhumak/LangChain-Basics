@@ -19,3 +19,7 @@ This project helps to design and implement an LLM-powered chatbot. We will manag
 ### 5. Build an Agent - Build_Agent.py
 
 Let's build an Agent. We will build an agent that can interact with a search engine, we wiil able to ask this agent questions, watch it call the search tool, and have conversations with it.
+
+### 6. Support Chatbot using LangGraph - support_basic_chatbot_langgraph.py
+
+Let's build our first chatbot using LangGraph. This bot can engage in basic conversation by taking user input and generating responses using an LLM.
