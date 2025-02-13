@@ -23,3 +23,7 @@ Let's build an Agent. We will build an agent that can interact with a search eng
 ### 6. Support Chatbot using LangGraph - support_basic_chatbot_langgraph.py
 
 Let's build our first chatbot using LangGraph. This bot can engage in basic conversation by taking user input and generating responses using an LLM.
+
+### 7. Enhancing the Support Chatbot with Tools - support_chatbot_langgraph_with_tools.py
+
+To handle queries our chatbot can't answer "from memory", we'll integrate a web search tool. Our bot can use this tool to find relevant information and provide better responses.
