@@ -27,3 +27,7 @@ Let's build our first chatbot using LangGraph. This bot can engage in basic conv
 ### 7. Enhancing the Support Chatbot with Tools - support_chatbot_langgraph_with_tools.py
 
 To handle queries our chatbot can't answer "from memory", we'll integrate a web search tool. Our bot can use this tool to find relevant information and provide better responses.
+
+### 8. Support Chatbot with Human in Loop - support_chatbot_langgraph_with_human_in_loop.py
+
+Agents can be unreliable and may need human input to successfully accomplish tasks. Similarly, for some actions, we may want to require human approval before running to ensure that everything is running as intended.
