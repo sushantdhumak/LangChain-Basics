@@ -16,22 +16,26 @@ This project helps to design and implement an LLM-powered chatbot. We will send 
 
 This project helps to design and implement an LLM-powered chatbot. We will manage conversation history and also use streaming to improve the user experience.
 
-### 5. Build an Agent - Build_Agent.py
+### 5. Build an Simple Agent - basic_agent.py
 
-Let's build an Agent. We will build an agent that can interact with a search engine, we wiil able to ask this agent questions, watch it call the search tool, and have conversations with it.
+We will build an agent with the help of built-in react_agent and AgentExecutor in langchain. We will able to ask this agent a questions, it will call the datetime tool and reply with the answer.
 
-### 6. Support Chatbot using LangGraph - support_basic_chatbot_langgraph.py
+### 6. Build an Agent - Build_Agent.py
+
+Let's build an Agent. We will build an agent that can interact with a search engine, we will able to ask this agent questions, watch it call the search tool, and have conversations with it.
+
+### 7. Support Chatbot using LangGraph - support_basic_chatbot_langgraph.py
 
 Let's build our first chatbot using LangGraph. This bot can engage in basic conversation by taking user input and generating responses using an LLM.
 
-### 7. Enhancing the Support Chatbot with Tools - support_chatbot_langgraph_with_tools.py
+### 8. Enhancing the Support Chatbot with Tools - support_chatbot_langgraph_with_tools.py
 
 To handle queries our chatbot can't answer "from memory", we'll integrate a web search tool. Our bot can use this tool to find relevant information and provide better responses.
 
-### 8. Support Chatbot with Memory - support_chatbot_langgraph_with_memory.py
+### 9. Support Chatbot with Memory - support_chatbot_langgraph_with_memory.py
 
 Our chatbot can use tools to answer user questions, but it doesn't remember the context of previous interactions. Let's provide memory to our agent through persistent checkpointing
 
-### 9. Support Chatbot with Human in Loop - support_chatbot_langgraph_with_human_in_loop.py
+### 10. Support Chatbot with Human in Loop - support_chatbot_langgraph_with_human_in_loop.py
 
 Agents can be unreliable and may need human input to successfully accomplish tasks. Similarly, for some actions, we may want to require human approval before running to ensure that everything is running as intended.
